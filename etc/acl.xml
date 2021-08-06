@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="AdeoWeb_WeatherConditions::weather" title="Weather" translate="title" sortOrder="50">
+                    <resource id="AdeoWeb_WeatherConditions::weather_weathertype" title="Weather Types" translate="title" sortOrder="10">
+                        <resource id="AdeoWeb_WeatherConditions::save" title="Save WeatherType" translate="title" sortOrder="10" />
+                        <resource id="AdeoWeb_WeatherConditions::delete" title="Delete WeatherType" translate="title" sortOrder="20" />
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

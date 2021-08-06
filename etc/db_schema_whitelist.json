@@ -1,0 +1,20 @@
+{
+    "adeoweb_weatherconditions_weathertype": {
+        "column": {
+            "id": true,
+            "status": true,
+            "name": true,
+            "alias": true,
+            "icon": true,
+            "description": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "index": {
+            "ADEOWEB_WEATHERTYPE_NAME_ALIAS": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

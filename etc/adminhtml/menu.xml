@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="AdeoWeb_WeatherConditions::weather" title="Weather" translate="title" module="AdeoWeb_WeatherConditions" sortOrder="50" dependsOnModule="AdeoWeb_WeatherConditions" resource="AdeoWeb_WeatherConditions::weather"/>
+        <add id="AdeoWeb_WeatherConditions::weather_weathertype" title="Weather Types" translate="title" module="AdeoWeb_WeatherConditions" parent="AdeoWeb_WeatherConditions::weather" sortOrder="10" dependsOnModule="AdeoWeb_WeatherConditions" action="weatherconditions/weathertype" resource="AdeoWeb_WeatherConditions::weather_weathertype"/>
+    </menu>
+</config>

@@ -1,0 +1,5 @@
+<ul class="weathertype-banner-listing">
+    <?php foreach ($block->getProductWeatherTypeImages() as $icon): ?>
+        <li class="weathertype-banner-bullets"><img class="weathertype-banner-media" src="<?= $block->escapeHtml($block->getImageUrl($icon)) ?>" alt="<?= $icon ?>"/></li>
+    <?php endforeach; ?>
+</ul>

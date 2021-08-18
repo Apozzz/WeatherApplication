@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace AdeoWeb\WeatherConditions\Ui\Component\WeatherType\Listing\Column;
 
-use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;

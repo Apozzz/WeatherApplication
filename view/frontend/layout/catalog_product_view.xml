@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="AdeoWeb_WeatherConditions::css/weathertype-banner.css" rel="stylesheet"/>
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <referenceContainer name="product.info.main">
+                <container name="weathertype.info" htmlTag="div" before="product.info.price">
+                    <block class="AdeoWeb\WeatherConditions\Block\WeatherTypeBanner" name="weathertype.banner" template="AdeoWeb_WeatherConditions::weathertype_banner.phtml"/>
+                </container>
+            </referenceContainer>
+        </referenceContainer>
+    </body>
+</page>

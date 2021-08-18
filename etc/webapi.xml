@@ -30,4 +30,16 @@
             <resource ref="anonymous"/>
         </resources>
     </route>
+    <route method="GET" url="/V1/weathertype/id/:weatherTypeId">
+        <service class="AdeoWeb\WeatherConditions\Api\WeatherTypeRepositoryInterface" method="getById"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
+    <route method="GET" url="/V1/weathertype/name/:weatherTypeName">
+        <service class="AdeoWeb\WeatherConditions\Api\WeatherTypeRepositoryInterface" method="getByName"/>
+        <resources>
+            <resource ref="anonymous"/>
+        </resources>
+    </route>
 </routes>

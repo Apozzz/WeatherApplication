@@ -1,1 +1,13 @@
-"Weather type is: ", "Oro sąlygos: "
+"Weather type is: ", "Oro sąlygos: ",
+"WeatherType ID", "Oro sąlygų ID",
+"WeatherType Status", "Oro sąlygų Būsena",
+"WeatherType Name", "Oro sąlygų Pavadinimas",
+"WeatherType Alias", "Oro sąlygų Slapyvardis",
+"WeatherType Icon", "Oro sąlygų Ikona",
+"WeatherType Description", "Oro sąlygų Apibūdinimas",
+"Creation_Time", "Sukūrimo data",
+"Update_Time", "Atnaujinimo data",
+"Page", "Puslapis",
+"of", "iš",
+"records per page", "įrašų skaičius per puslapį",
+"Getting Data", "Gaunami duomenys"

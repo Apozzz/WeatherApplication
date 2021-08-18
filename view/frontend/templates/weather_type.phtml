@@ -1,1 +1,80 @@
-<?= __("Weather type is: ") . $block->escapeHtml($block->getWeatherType()); ?>
+<div class="weathertype-responsive-table" data-bind="scope: 'weatherTypesTable'">
+    <div class="weathertype-responsive-table-caption">
+        <div class="weathertype-responsive-table-header">
+            <div class="weathertype-table-header-cell"><?= __('WeatherType ID') ?></div>
+            <div class="weathertype-table-header-cell"><?= __('WeatherType Status') ?></div>
+            <div class="weathertype-table-header-cell"><?= __('WeatherType Name') ?></div>
+            <div class="weathertype-table-header-cell"><?= __('WeatherType Alias') ?></div>
+            <div class="weathertype-table-header-cell"><?= __('WeatherType Icon') ?></div>
+            <div class="weathertype-table-header-cell"><?= __('WeatherType Description') ?></div>
+            <div class="weathertype-table-header-cell"><?= __('Creation_Time') ?></div>
+            <div class="weathertype-table-header-cell"><?= __('Update_Time') ?></div>
+        </div>
+        <div class="weathertype-responsive-table-body" data-bind="foreach: paginated">
+            <div class="weathertype-responsive-table-row">
+                <div class="weathertype-table-body-cell">
+                    <b data-bind="text: $data['id']"></b>
+                </div>
+                <div class="weathertype-table-body-cell">
+                    <b data-bind="text: $data['status']"></b>
+                    <p data-bind="if: $data['status'] === 1">
+                        <img class="weathertype-media" src="<?= $this->getViewFileUrl('AdeoWeb_WeatherConditions::images/status-enabled.png'); ?>" alt="Enabled"/>
+                    </p>
+                    <p data-bind="ifnot: $data['status'] === 1">
+                        <img class="weathertype-media" src="<?= $this->getViewFileUrl('AdeoWeb_WeatherConditions::images/status-disabled.png'); ?>" alt="Disabled"/>
+                    </p>
+                </div>
+                <div class="weathertype-table-body-cell">
+                    <b data-bind="text: $data['name']"></b>
+                </div>
+                <div class="weathertype-table-body-cell">
+                    <b data-bind="text: $data['alias']"></b>
+                </div>
+                <div class="weathertype-table-body-cell">
+                    <b data-bind="text: $data['icon']"></b>
+                </div>
+                <div class="weathertype-table-body-cell">
+                    <b data-bind="text: $data['description']"></b>
+                </div>
+                <div class="weathertype-table-body-cell">
+                    <b data-bind="text: $data['creation_time']"></b>
+                </div>
+                <div class="weathertype-table-body-cell">
+                    <b data-bind="text: $data['update_time']"></b>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pager" data-bind="scope: 'weatherTypes'">
+    <a href="#" class="previous" data-bind="click: previous, visible: getHasPrevious">&lt;</a>
+    <span><?= __('Page') ?> </span><span class="current" data-bind="text: pageNumber"></span><span> <?= __('of') ?> </span><span data-bind="text: totalPagesCount"></span>
+    <a href="#" class="next" data-bind="click: next, visible: getHasNext">&gt;</a>
+    <input type="text" data-bind="value: sizePerPage, event: { blur: recalculate }"/><span> <?= __('records per page') ?></span>
+</div>
+<script type="text/x-magento-init">
+     {
+        ".weathertype-responsive-table": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "weatherTypesTable": {
+                        "component": "AdeoWeb_WeatherConditions/js/weathertype-getdata",
+                        "weatherType": "<?= $block->escapeJs($block->getWeatherType()) ?>",
+                        "url": "<?= $block->escapeJs($block->getUrl()) ?>"
+                    }
+                }
+            }
+        },
+        ".pager": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "weatherTypes": {
+                        "component": "AdeoWeb_WeatherConditions/js/weathertype-getdata",
+                        "weatherType": "<?= $block->escapeJs($block->getWeatherType()) ?>",
+                        "url": "<?= $block->escapeJs($block->getUrl()) ?>"
+                    }
+                }
+            }
+        }
+     }
+</script>

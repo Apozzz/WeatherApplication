@@ -1,1 +1,13 @@
-"Weather type is: ", "Weather type is: "
+"Weather type is: ", "Weather type is: ",
+"WeatherType ID", "WeatherType ID",
+"WeatherType Status", "WeatherType Status",
+"WeatherType Name", "WeatherType Name",
+"WeatherType Alias", "WeatherType Alias",
+"WeatherType Icon", "WeatherType Icon",
+"WeatherType Description", "WeatherType Description",
+"Creation_Time", "Creation_Time",
+"Update_Time", "Update_Time"
+"Page", "Page",
+"of", "of",
+"records per page", "records per page",
+"Getting Data", "Getting Data"

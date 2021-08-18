@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace AdeoWeb\WeatherConditions\Model;
 
+use AdeoWeb\WeatherConditions\Api\Data\WeatherTypeInterface;
 use AdeoWeb\WeatherConditions\Api\Data\WeatherTypeSearchResultsInterfaceFactory;
 use AdeoWeb\WeatherConditions\Api\WeatherTypeRepositoryInterface;
 use AdeoWeb\WeatherConditions\Model\ResourceModel\WeatherType as ResourceWeatherType;
 use AdeoWeb\WeatherConditions\Model\ResourceModel\WeatherType\CollectionFactory;
 use Exception;
-use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Exception\CouldNotDeleteException;
 use Magento\Framework\Exception\CouldNotSaveException;
@@ -33,12 +33,7 @@ class WeatherTypeRepository implements WeatherTypeRepositoryInterface
     private $weatherTypeCollectionFactory;
 
     /**
-     * @var WeatherTypeSearchResultsInterfaceFactory
-     */
-    private $searchResultsFactory;
-
-    /**
-     * @var CollectionProcessorInterface
+     * @var \AdeoWeb\WeatherConditions\Model\CollectionProcessor
      */
     private $collectionProcessor;
 
@@ -46,17 +41,15 @@ class WeatherTypeRepository implements WeatherTypeRepositoryInterface
         ResourceWeatherType $resource,
         WeatherTypeFactory $weatherTypeFactory,
         CollectionFactory $weatherTypeCollectionFactory,
-        WeatherTypeSearchResultsInterfaceFactory $searchResultsFactory,
-        CollectionProcessorInterface $collectionProcessor
+        CollectionProcessor $collectionProcessor
     ) {
         $this->resource = $resource;
         $this->weatherTypeFactory = $weatherTypeFactory;
         $this->weatherTypeCollectionFactory = $weatherTypeCollectionFactory;
-        $this->searchResultsFactory = $searchResultsFactory;
         $this->collectionProcessor = $collectionProcessor;
     }
 
-    public function save(\AdeoWeb\WeatherConditions\Api\Data\WeatherTypeInterface $weatherType)
+    public function save(WeatherTypeInterface $weatherType)
     {
         try {
             $this->resource->save($weatherType);
@@ -92,17 +85,17 @@ class WeatherTypeRepository implements WeatherTypeRepositoryInterface
     public function getList(SearchCriteriaInterface $searchCriteria)
     {
         $collection = $this->weatherTypeCollectionFactory->create();
-        $collection->load();
-        $this->collectionProcessor->process($searchCriteria, $collection);
-        $searchResults = $this->searchResultsFactory->create();
-        $searchResults->setSearchCriteria($searchCriteria);
-        $searchResults->setItems($collection->getItems());
-        $searchResults->setTotalCount($collection->getSize());
 
-        return $searchResults;
+        $this->collectionProcessor->addFiltersToCollection($searchCriteria, $collection);
+        $this->collectionProcessor->addSortOrdersToCollection($searchCriteria, $collection);
+        $this->collectionProcessor->addPagingToCollection($searchCriteria, $collection);
+
+        $collection->load();
+
+        return $this->collectionProcessor->buildSearchResult($searchCriteria, $collection);
     }
 
-    public function delete(\AdeoWeb\WeatherConditions\Api\Data\WeatherTypeInterface $weatherType)
+    public function delete(WeatherTypeInterface $weatherType)
     {
         try {
             $this->resource->delete($weatherType);
@@ -115,6 +108,12 @@ class WeatherTypeRepository implements WeatherTypeRepositoryInterface
 
     public function deleteById(int $weatherTypeId)
     {
-        return $this->delete($this->getById($weatherTypeId));
+        try {
+            $this->delete($this->getById($weatherTypeId));
+        } catch (Exception $exception) {
+            throw new Exception(__($exception->getMessage()));
+        }
+
+        return true;
     }
 }

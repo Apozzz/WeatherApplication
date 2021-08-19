@@ -1,5 +1,16 @@
-<ul class="weathertype-banner-listing">
-    <?php foreach ($block->getProductWeatherTypeImages() as $icon): ?>
-        <li class="weathertype-banner-bullets"><img class="weathertype-banner-media" src="<?= $block->escapeHtml($block->getImageUrl($icon)) ?>" alt="<?= $icon ?>"/></li>
-    <?php endforeach; ?>
-</ul>
+<?php if ($block->isBannerActivated()): ?>
+    <ul class="weathertype-banner-listing">
+        <?php foreach ($block->getProductWeatherTypeImages() as $icon): ?>
+            <li class="weathertype-banner-bullets"><img class="weathertype-banner-media" src="<?= $block->escapeHtml($block->getImageUrl($icon)) ?>" alt="<?= $icon ?>"/></li>
+        <?php endforeach; ?>
+    </ul>
+<?php endif; ?>
+<script type="text/javascript">
+    require(["jquery"], function(jQuery) {
+        jQuery(".product-options-wrapper select[id^='attribute']").last().on('change', function() {
+            setTimeout(function (){
+                simpleId=jQuery("input[name=selected_configurable_option]").val();
+                alert(simpleId);
+            }, 500);
+        }); });
+</script>

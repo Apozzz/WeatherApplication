@@ -2,24 +2,19 @@
 
 declare(strict_types=1);
 
-namespace AdeoWeb\WeatherConditions\Block;
+namespace AdeoWeb\WeatherConditions\ViewModel;
 
 use AdeoWeb\WeatherConditions\Model\WeatherTypeRepository;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\View\Element\Block\ArgumentInterface;
 use Magento\Framework\View\Element\Template;
-use Magento\Framework\Registry;
 use Magento\FrameWork\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
 
-class WeatherTypeBanner extends Template
+class WeatherTypeListingBanner extends Template implements ArgumentInterface
 {
     private const PATH_MEDIA = 'pub/media/adeoweb/weatherconditions/';
-    private const PATH_ADD_PRODUCT_BANNER = 'catalog/frontend/banner_product';
-
-    /**
-     * @var Registry
-     */
-    private $registry;
+    private const PATH_ADD_CATALOG_BANNER = 'catalog/frontend/banner_catalog';
 
     /**
      * @var WeatherTypeRepository
@@ -33,21 +28,19 @@ class WeatherTypeBanner extends Template
 
     public function __construct(
         Template\Context $context,
-        Registry $registry,
         ScopeConfigInterface $scopeConfig,
         WeatherTypeRepository $weatherTypeRepository,
         array $data = []
     ) {
         $this->weatherTypeRepository = $weatherTypeRepository;
         $this->scopeConfig = $scopeConfig;
-        $this->registry = $registry;
         parent::__construct($context, $data);
     }
 
-    public function getProductWeatherTypeImages(): array
+    public function getProductWeatherTypeImages(string $product): array
     {
         $answer = [];
-        $arrays = explode(',', $this->getProduct()->getCustomAttribute('product_weathertype')->getValue());
+        $arrays = explode(',', $product);
         foreach ($arrays as $id) {
             try {
                 $weatherType = $this->weatherTypeRepository->getById((int)$id);
@@ -67,11 +60,6 @@ class WeatherTypeBanner extends Template
 
     public function isBannerActivated(?int $store = null): bool
     {
-        return $this->scopeConfig->isSetFlag(self::PATH_ADD_PRODUCT_BANNER, ScopeInterface::SCOPE_STORE, $store);
-    }
-
-    private function getProduct()
-    {
-        return $this->registry->registry('product');
+        return $this->scopeConfig->isSetFlag(self::PATH_ADD_CATALOG_BANNER, ScopeInterface::SCOPE_STORE, $store);
     }
 }

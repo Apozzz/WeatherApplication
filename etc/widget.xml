@@ -1,0 +1,15 @@
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget class="AdeoWeb\WeatherConditions\Block\Widget\WeatherTypeWidget" id="weathertype_widget">
+        <label>My New Widget</label>
+        <description>This is a test widget!!!</description>
+        <parameters>
+            <parameter name="hah" xsi:type="text" visible="true">
+                <label translate="true">Haha</label>
+            </parameter>
+            <parameter name="weathertype_tomorrows_weather" xsi:type="select" source_model="AdeoWeb\WeatherConditions\Model\Attribute\Source\WeatherTypeAttribute" required="true" visible="true">
+                <label translate="true">Tomorrows Weather</label>
+            </parameter>
+        </parameters>
+    </widget>
+</widgets>

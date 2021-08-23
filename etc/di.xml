@@ -32,4 +32,9 @@
             </argument>
         </arguments>
     </type>
+
+    <type name='Magento\ConfigurableProduct\Block\Product\View\Type\Configurable'>
+        <plugin name='banner_plugin' type='AdeoWeb\WeatherConditions\Plugin\testPlug' sortOrder='10' disabled='false'/>
+    </type>
+
 </config>

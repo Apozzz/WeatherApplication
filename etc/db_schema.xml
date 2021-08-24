@@ -20,7 +20,7 @@
         <column xsi:type="text" name="name" nullable="false" comment="User Name"/>
         <column xsi:type="text" name="surname" nullable="false" comment="User SurName"/>
         <column xsi:type="datetime" name="birth_date" nullable="false" comment="User Birth Date"/>
-        <column xsi:type="int" name="weather_id" padding="11" unsigned="true" nullable="false" comment="User Preferred WeatherType"/>
+        <column xsi:type="int" name="weather_id" padding="11" unsigned="true" nullable="true" comment="User Preferred WeatherType"/>
         <column xsi:type="datetime" name="created_at" nullable="false" default="CURRENT_TIMESTAMP" comment="Created_At"/>
         <column xsi:type="datetime" name="updated_at" nullable="false" default="CURRENT_TIMESTAMP" comment="Updated_At"/>
         <constraint xsi:type="primary" referenceId="PRIMARY">

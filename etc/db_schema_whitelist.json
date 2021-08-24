@@ -1,0 +1,33 @@
+{
+  "adeoweb_weatherapplication_weathertype": {
+    "column": {
+      "weathertype_id": true,
+      "name": true,
+      "created_at": true,
+      "updated_at": true
+    },
+    "index": {
+      "ADEOWEB_WEATHERAPPLICATION_WEATHERTYPE_NAME": true
+    },
+    "constraint": {
+      "PRIMARY": true
+    }
+  },
+  "adeoweb_weatherapplication_user": {
+    "column": {
+      "user_id": true,
+      "name": true,
+      "surname": true,
+      "birth_date": true,
+      "weathertype_id": true,
+      "created_at": true,
+      "updated_at": true
+    },
+    "index": {
+      "ADEOWEB_WEATHERAPPLICATION_USER_NAME": true
+    },
+    "constraint": {
+      "PRIMARY": true
+    }
+  }
+}

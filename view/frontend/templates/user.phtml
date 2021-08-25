@@ -1,0 +1,29 @@
+<?php $users = $block->getUsers() ?>
+<div class="user-responsive-table">
+    <div class="user-responsive-table-caption">
+        <div class="user-responsive-table-header">
+            <div class="user-table-header-cell"><?= __('User ID') ?></div>
+            <div class="user-table-header-cell"><?= __('User Name') ?></div>
+            <div class="user-table-header-cell"><?= __('User Surname') ?></div>
+            <div class="user-table-header-cell"><?= __('User Birth Date') ?></div>
+            <div class="user-table-header-cell"><?= __('User Preferred Weather Type') ?></div>
+        </div>
+        <div class="user-responsive-table-body">
+            <?php if($users && $users->getSize() > 0): ?>
+                <?php foreach ($users as $user): ?>
+                    <div class="user-responsive-table-row">
+                        <div class="user-table-body-cell"><?= $user->getId() ?></div>
+                        <div class="user-table-body-cell"><?= $user->getName() ?></div>
+                        <div class="user-table-body-cell"><?= $user->getSurname() ?></div>
+                        <div class="user-table-body-cell"><?= $user->getBirthDate() ?></div>
+                        <div class="user-table-body-cell"><?= $block->escapeHtml($block->getWeatherTypeNameByID($user->getWeatherType())) ?></div>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <div class="user-responsive-table-row">
+                    <?= __('Currently there are no registered users') ?>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>

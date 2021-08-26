@@ -1,0 +1,44 @@
+<div class="container" data-bind="scope: 'api'">
+    <div class="button-container">
+        <button class="button" name="postUser">
+            POST request for user
+        </button>
+        <button class="button" name="getUser">
+            GET request for user
+        </button>
+        <button class="button" name="getProducts">
+            GET request for products list
+        </button>
+    </div>
+    <div class="form-container">
+        <form class="form">
+            <label class="label-id">Enter user ID:
+                <input type="text" class="user-id">
+            </label>
+            <label class="label-weathertype">Enter WeatherType Name:
+                <select class="weathertype-id">
+                    <?php $weathers = $block->getWeatherTypes(); ?>
+                    <?php foreach ($weathers as $weatherName => $weatherId):?>
+                        <option value="<?= $weatherId ?>"><?= $weatherName ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </label>
+        </form>
+        <button class="submit-button" name="submit">Submit</button>
+        <span class="span-output" data-bind="text: outputData"></span>
+    </div>
+</div>
+<script type="text/x-magento-init">
+     {
+        ".container": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "api": {
+                        "component": "AdeoWeb_WeatherApplication/js/api",
+                        "url": "<?= $block->escapeJs($block->getUrl()) ?>"
+                    }
+                }
+            }
+        }
+     }
+</script>

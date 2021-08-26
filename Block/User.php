@@ -44,7 +44,7 @@ class User extends Template
         return $this->user->create()->getCollection();
     }
 
-    public function getWeatherTypeNameByID(int $weatherTypeID): string
+    public function getWeatherTypeNameByID(?int $weatherTypeID): string
     {
         $weatherType = $this->weatherType->create()->getItemById($weatherTypeID);
 

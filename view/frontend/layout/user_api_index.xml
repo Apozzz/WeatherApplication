@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <head>
-        <css src="AdeoWeb_WeatherApplication::css/user.css" rel="stylesheet" />
+        <css src="AdeoWeb_WeatherApplication::css/api.css" rel="stylesheet" />
     </head>
     <body>
         <referenceContainer name="footer" remove="true"/>
         <referenceContainer name="div.sidebar.additional" remove="true"/>
         <referenceContainer name="header.panel.wrapper" remove="true"/>
         <referenceContainer name="content">
-            <block class="AdeoWeb\WeatherApplication\Block\User" name="user.index.page"
-                   template="AdeoWeb_WeatherApplication::user.phtml"/>
+            <block class="AdeoWeb\WeatherApplication\Block\Api" name="api.index.page"
+                   template="AdeoWeb_WeatherApplication::api.phtml"/>
         </referenceContainer>
     </body>
 </page>

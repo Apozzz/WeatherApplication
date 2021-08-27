@@ -6,8 +6,8 @@ interface WeatherTypeInterface
 {
     public const ID             = 'weathertype_id';
     public const NAME           = 'name';
-    public const CREATION_TIME  = 'created_at';
-    public const UPDATE_TIME    = 'updated_at';
+    public const CREATED_AT     = 'created_at';
+    public const UPDATED_AT     = 'updated_at';
 
     /**
      * @return int|null

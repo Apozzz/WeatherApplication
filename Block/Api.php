@@ -4,31 +4,31 @@ declare(strict_types=1);
 
 namespace AdeoWeb\WeatherApplication\Block;
 
-use AdeoWeb\WeatherApplication\Model\WeatherTypeFactory;
+use AdeoWeb\WeatherApplication\Model\ResourceModel\WeatherType\CollectionFactory;
 use Magento\Framework\View\Element\Template;
 
 class Api extends Template
 {
     /**
-     * @var WeatherTypeFactory
+     * @var CollectionFactory
      */
-    private $weatherType;
+    private $weatherTypeCollectionFactory;
 
     public function __construct(
-        WeatherTypeFactory $weatherType,
+        CollectionFactory $weatherTypeCollectionFactory,
         Template\Context $context,
         array $data = []
     ) {
-        $this->weatherType= $weatherType;
+        $this->weatherTypeCollectionFactory = $weatherTypeCollectionFactory;
         parent::__construct($context, $data);
     }
 
     public function getWeatherTypes(): array
     {
         $weatherTypes = [];
-        $collection = $this->weatherType->create()->getCollection();
+        $collection = $this->weatherTypeCollectionFactory->create()->load();
         foreach ($collection as $weather) {
-            $weatherTypes[$weather->getName()] = $weather->getId();
+            $weatherTypes[$weather->getId()] = $weather->getName();
         }
 
         return $weatherTypes;

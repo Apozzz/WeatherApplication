@@ -4,50 +4,52 @@ declare(strict_types=1);
 
 namespace AdeoWeb\WeatherApplication\Block;
 
-use AdeoWeb\WeatherApplication\Api\Data\UserInterfaceFactory;
-use AdeoWeb\WeatherApplication\Model\ResourceModel\WeatherType\CollectionFactory;
-use Magento\Framework\Data\Collection\AbstractDb;
-use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
+use AdeoWeb\WeatherApplication\Api\WeatherTypeRepositoryInterface;
+use AdeoWeb\WeatherApplication\Model\ResourceModel\User\Collection;
+use AdeoWeb\WeatherApplication\Model\ResourceModel\User\CollectionFactory;
+use Magento\Framework\Phrase;
 use Magento\Framework\View\Element\Template;
 
 class User extends Template
 {
-    private const PARAM_NAME                    = 'name';
     private const TEXT_NO_PREFERRED_WEATHERTYPE = 'No Preferred Weather Type';
 
     /**
-     * @var UserInterfaceFactory
+     * @var WeatherTypeRepositoryInterface
      */
-    private $user;
+    private $weatherTypeRepository;
 
     /**
      * @var CollectionFactory
      */
-    private $weatherType;
+    private $userCollectionFactory;
 
     public function __construct(
-        UserInterfaceFactory $user,
-        CollectionFactory $weatherType,
+        CollectionFactory $userCollectionFactory,
+        WeatherTypeRepositoryInterface $weatherTypeRepository,
         Template\Context $context,
         array $data = []
     ) {
-        $this->user = $user;
-        $this->weatherType = $weatherType;
+        $this->userCollectionFactory = $userCollectionFactory;
+        $this->weatherTypeRepository = $weatherTypeRepository;
         parent::__construct($context, $data);
     }
 
-    /**
-     * @return AbstractDb|AbstractCollection|null
-     */
-    public function getUsers()
+    public function getUsers(): Collection
     {
-        return $this->user->create()->getCollection();
+        return $this->userCollectionFactory->create()->load();
     }
 
-    public function getWeatherTypeNameByID(?int $weatherTypeID): string
+    /**
+     * @param int|null $weatherTypeID
+     * @return Phrase|string
+     */
+    public function getWeatherTypeNameByID(?int $weatherTypeID)
     {
-        $weatherType = $this->weatherType->create()->getItemById($weatherTypeID);
+        if (!$weatherTypeID) {
+            return __(self::TEXT_NO_PREFERRED_WEATHERTYPE);
+        }
 
-        return $weatherType === null ? self::TEXT_NO_PREFERRED_WEATHERTYPE : $weatherType->getData(self::PARAM_NAME);
+        return $this->weatherTypeRepository->getById($weatherTypeID)->getName();
     }
 }

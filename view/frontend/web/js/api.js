@@ -1,11 +1,15 @@
 define([
     'jquery',
     'uiComponent',
-    'ko'
-], function($, Component, ko){
+    'ko',
+    'mage/translate'
+], function($, Component, ko, $t){
     "use strict";
     return Component.extend({
         defaults: {
+            PARAM_REQUEST_TYPE_POST_USER: 0,
+            PARAM_REQUEST_TYPE_GET_USER: 1,
+            PARAM_REQUEST_TYPE_GET_PRODUCTS: 2,
             url: '',
             form: '',
             labelId: '',
@@ -24,145 +28,136 @@ define([
         initialize: function () {
             this._super();
             this.getHtmlElementsData();
-            this.observePostUser();
-            this.observeGetUser();
-            this.observeGetProducts();
-            this.observeSubmitButton();
+
             return this;
         },
 
         resetHtmlElementsVisibility: function () {
-            this.form.style.display = "none";
-            this.labelId.style.display = "none";
-            this.labelWeatherType.style.display = "none";
-            this.submitButton.style.display = "none";
-            this.spanOutput.style.display = "none";
+            $(this.form).hide();
+            $(this.labelId).hide();
+            $(this.labelWeatherType).hide();
+            $(this.submitButton).hide();
+            $(this.spanOutput).hide();
         },
 
         getHtmlElementsData: function () {
-            this.form = document.getElementsByClassName("form")[0];
-            this.labelId = document.getElementsByClassName("label-id")[0];
-            this.labelWeatherType = document.getElementsByClassName("label-weathertype")[0];
-            this.submitButton = document.getElementsByClassName("submit-button")[0];
-            this.spanOutput = document.getElementsByClassName("span-output")[0];
-            this.postUserButton = document.getElementsByName("postUser")[0];
-            this.getUserButton = document.getElementsByName("getUser")[0];
-            this.getProductsButton = document.getElementsByName("getProducts")[0];
+            this.form = $('.form').get();
+            this.labelId = $('.content-id').get();
+            this.labelWeatherType = $('.content-weathertype').get();
+            this.submitButton = $('.submit-data').get();
+            this.spanOutput = $('.output').get();
+            this.postUserButton = $('.postUser').get();
+            this.getUserButton = $('.getUser').get();
+            this.getProductsButton = $('.getProducts').get();
         },
 
         enableHtmlElements: function () {
             this.resetHtmlElementsVisibility();
-            this.form.style.display = "block";
-            this.submitButton.style.display = "block";
-            $(".form").show();
+            $(this.form).show();
+            $(this.submitButton).show();
         },
 
-        observePostUser: function () {
-            let self = this;
-            this.postUserButton.addEventListener("click", function() {
-                self.requestType = 0;
-                self.enableHtmlElements();
-                self.labelId.style.display = "block";
-                self.labelWeatherType.style.display = "block";
-            }, false);
+        clickedPostUser: function () {
+            this.requestType = this.PARAM_REQUEST_TYPE_POST_USER;
+            this.enableHtmlElements();
+            $(this.labelId).show();
+            $(this.labelWeatherType).show();
         },
 
-        observeGetUser: function () {
-            let self = this;
-            this.getUserButton.addEventListener("click", function() {
-                self.requestType = 1;
-                self.enableHtmlElements();
-                self.labelId.style.display = "block";
-            }, false);
+        clickedGetUser: function () {
+            this.requestType = this.PARAM_REQUEST_TYPE_GET_USER;
+            this.enableHtmlElements();
+            $(this.labelId).show();
         },
 
-        observeGetProducts: function () {
-            let self = this;
-            this.getProductsButton.addEventListener("click", function() {
-                self.requestType = 2;
-                self.enableHtmlElements();
-                self.labelWeatherType.style.display = "block";
-            }, false);
+        clickedGetProducts: function () {
+            this.requestType = this.PARAM_REQUEST_TYPE_GET_PRODUCTS;
+            this.enableHtmlElements();
+            $(this.labelWeatherType).show();
         },
 
-        observeSubmitButton: function() {
-            let self = this;
-            this.submitButton.addEventListener("click", function() {
-                self.userId = document.getElementsByClassName("user-id")[0].value;
-                self.weatherTypeId = document.getElementsByClassName("weathertype-id")[0].value;
-                if (!Number.isInteger(Number(self.userId))) {
-                    alert('ID must be a positive integer, input given: ' + self.userId + '. Please try again');
-                    return;
-                }
-                if (self.requestType !== 0) {
-                    self.spanOutput.style.display = "block";
-                }
-                self.runAjaxRequest();
-            }, false);
+        clickedSubmitButton: function() {
+            this.userId = $('.user-id').val();
+            this.weatherTypeId = $('.weathertype-id').val();
+            if (!Number.isInteger(Number(this.userId))) {
+                alert($t('ID must be a positive integer, input given: ') + this.userId + $t('. Please try again'));
+
+                return;
+            }
+            if (this.requestType !== 0) {
+                $(this.spanOutput).show();
+            }
+            this.runAjaxRequest();
         },
 
         getCustomerById: function () {
             let self = this;
-            $('body').trigger('processStart');
             $.ajax({
                 url: this.generateRestApiUrl(),
                 type: 'GET',
                 dataType: 'json',
                 cache: true,
                 showLoader: true,
-                success: function (data) {
-                    self.outputData(JSON.stringify(data));
-                    $('body').trigger('processStop');
+                beforeSend: function () {
+                    $('body').trigger('processStart');
                 },
-                error: function () {
-                    alert("An error ocurred. User with ID: " + self.userId + " does not exist");
+                complete: function () {
                     $('body').trigger('processStop');
                 }
+            }).done(function (data) {
+                self.outputData(JSON.stringify(data));
+            }).fail(function () {
+                alert($t("An error occurred. User with ID: ") + self.userId + $t(" does not exist"));
             });
         },
 
         getProductsByWeatherType: function () {
             let self = this;
-            $('body').trigger('processStart');
             $.ajax({
                 url: this.generateRestApiUrl(),
                 type: 'GET',
                 dataType: 'json',
                 cache: true,
-                showLoader: true
+                showLoader: true,
+                beforeSend: function () {
+                    $('body').trigger('processStart');
+                },
+                complete: function () {
+                    $('body').trigger('processStop');
+                }
             }).done(function (data) {
                 let products = self.getProductValuesFrom2DArray(data);
                 self.outputData(JSON.stringify(products));
-                $('body').trigger('processStop');
             });
         },
 
         postCustomerWeatherType: function () {
             let self = this;
-            $('body').trigger('processStart');
             $.ajax({
                 url: this.generateRestApiUrl(),
                 type: 'POST',
                 dataType: 'json',
                 cache: true,
                 showLoader: true,
-                success: function() {
-                    alert("Users: " + self.userId + " Weather Type was successfully changed");
-                    $('body').trigger('processStop');
+                beforeSend: function () {
+                    $('body').trigger('processStart');
                 },
-                error: function () {
-                    alert("An error ocurred. Weather Type of user: " + self.userId + " was not changed");
+                complete: function () {
                     $('body').trigger('processStop');
                 }
+            }).done(function () {
+                alert($t("Operation has been completed"));
+            }).fail(function () {
+                alert($t("An error occurred. Weather Type of user: ") + self.userId + $t(" was not changed"));
             });
         },
 
         runAjaxRequest: function () {
             switch (this.requestType) {
-                case 0:
+                case this.PARAM_REQUEST_TYPE_POST_USER:
                     this.postCustomerWeatherType();
                     break;
-                case 1:
+                case this.PARAM_REQUEST_TYPE_GET_USER:
                     this.getCustomerById();
                     break;
                 default:
@@ -174,10 +169,10 @@ define([
         generateRestApiUrl: function() {
             let url;
             switch (this.requestType) {
-                case 0:
+                case this.PARAM_REQUEST_TYPE_POST_USER:
                     url = this.url + 'rest/V1/api/user/' + this.userId + '/' + this.weatherTypeId;
                     break;
-                case 1:
+                case this.PARAM_REQUEST_TYPE_GET_USER:
                     url = this.url + 'rest/V1/api/user/' + this.userId;
                     break;
                 default:

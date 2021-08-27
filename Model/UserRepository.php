@@ -56,7 +56,7 @@ class UserRepository implements UserRepositoryInterface
             $user = $this->getById($userId);
             $user->setWeatherType($weatherTypeId);
             $this->resource->save($user);
-        } catch (NoSuchEntityException|Exception $e) {
+        } catch (Exception $e) {
             $this->messageManager->addErrorMessage($e->getMessage());
 
             return false;

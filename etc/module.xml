@@ -3,6 +3,7 @@
     <module name="AdeoWeb_WeatherApplication" setup_version="0.0.1">
         <sequence>
             <module name="Magento_Catalog"/>
+            <module name="Magento_Webapi"/>
         </sequence>
     </module>
 </config>

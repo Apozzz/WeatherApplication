@@ -36,17 +36,17 @@ class User extends AbstractModel implements UserInterface
 
     public function getWeatherType()
     {
-        return $this->getData(self::WEATHER_TYPE);
+        return $this->getData(self::WEATHER_ID);
     }
 
     public function getCreationTime()
     {
-        return $this->getData(self::CREATION_TIME);
+        return $this->getData(self::CREATED_AT);
     }
 
     public function getUpdateTime()
     {
-        return $this->getData(self::UPDATE_TIME);
+        return $this->getData(self::UPDATED_AT);
     }
 
     /**
@@ -75,16 +75,16 @@ class User extends AbstractModel implements UserInterface
 
     public function setWeatherType(int $weatherType)
     {
-        return $this->setData(self::WEATHER_TYPE, $weatherType);
+        return $this->setData(self::WEATHER_ID, $weatherType);
     }
 
     public function setCreationTime(string $creationTime)
     {
-        return $this->setData(self::CREATION_TIME, $creationTime);
+        return $this->setData(self::CREATED_AT, $creationTime);
     }
 
     public function setUpdateTime(string $updateTime)
     {
-        return $this->setData(self::UPDATE_TIME, $updateTime);
+        return $this->setData(self::UPDATED_AT, $updateTime);
     }
 }

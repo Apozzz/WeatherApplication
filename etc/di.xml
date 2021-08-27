@@ -3,4 +3,5 @@
     <preference for="AdeoWeb\WeatherApplication\Api\Data\WeatherTypeInterface" type="AdeoWeb\WeatherApplication\Model\WeatherType" />
     <preference for="AdeoWeb\WeatherApplication\Api\Data\UserInterface" type="AdeoWeb\WeatherApplication\Model\User" />
     <preference for="AdeoWeb\WeatherApplication\Api\UserRepositoryInterface" type="AdeoWeb\WeatherApplication\Model\UserRepository" />
+    <preference for="AdeoWeb\WeatherApplication\Api\WeatherTypeRepositoryInterface" type="AdeoWeb\WeatherApplication\Model\WeatherTypeRepository" />
 </config>

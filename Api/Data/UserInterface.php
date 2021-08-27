@@ -8,9 +8,9 @@ interface UserInterface
     public const NAME           = 'name';
     public const SURNAME        = 'surname';
     public const BIRTH_DATE     = 'birth_date';
-    public const WEATHER_TYPE   = 'weather_id';
-    public const CREATION_TIME  = 'created_at';
-    public const UPDATE_TIME    = 'updated_at';
+    public const WEATHER_ID     = 'weather_id';
+    public const CREATED_AT     = 'created_at';
+    public const UPDATED_AT     = 'updated_at';
 
     /**
      * @return int|null

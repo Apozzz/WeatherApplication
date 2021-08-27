@@ -4,34 +4,35 @@ declare(strict_types=1);
 
 namespace AdeoWeb\WeatherApplication\Model\Attribute\Source;
 
-use AdeoWeb\WeatherApplication\Api\Data\WeatherTypeInterfaceFactory;
+use AdeoWeb\WeatherApplication\Model\ResourceModel\WeatherType\CollectionFactory;
 use Magento\Eav\Model\Entity\Attribute\Source\AbstractSource;
 
 class WeatherTypeAttribute extends AbstractSource
 {
-    private const LABEL_VALUE = 'value';
-    private const LABEL_LABEL = 'label';
+    private const PARAM_VALUE = 'value';
+    private const PARAM_LABEL = 'label';
 
     /**
-     * @var WeatherTypeInterfaceFactory
+     * @var CollectionFactory
      */
-    private $weatherType;
+    private $weatherTypeCollectionFactory;
 
     public function __construct(
-        WeatherTypeInterfaceFactory $weatherType
+        CollectionFactory $weatherTypeCollectionFactory
     ) {
-        $this->weatherType = $weatherType;
+        $this->weatherTypeCollectionFactory = $weatherTypeCollectionFactory;
     }
 
     public function getAllOptions(): array
     {
-        $collection = $this->weatherType->create()->getCollection();
+        $collection = $this->weatherTypeCollectionFactory->create()->load();
         $options = [];
+        $format = '(ID: %d) %s';
 
         foreach ($collection as $weatherType) {
             $options[] = [
-                self::LABEL_VALUE => $weatherType->getId(),
-                self::LABEL_LABEL => '(ID:' . $weatherType->getId() . ')   ' . $weatherType->getName()
+                self::PARAM_VALUE => $weatherType->getId(),
+                self::PARAM_LABEL => sprintf($format, $weatherType->getId(), $weatherType->getName())
             ];
         }
 

@@ -12,10 +12,10 @@
             <?php if($users && $users->getSize() > 0): ?>
                 <?php foreach ($users as $user): ?>
                     <div class="user-responsive-table-row">
-                        <div class="user-table-body-cell"><?= $user->getId() ?></div>
-                        <div class="user-table-body-cell"><?= $user->getName() ?></div>
-                        <div class="user-table-body-cell"><?= $user->getSurname() ?></div>
-                        <div class="user-table-body-cell"><?= $user->getBirthDate() ?></div>
+                        <div class="user-table-body-cell"><?= $block->escapeHtml($user->getId()) ?></div>
+                        <div class="user-table-body-cell"><?= $block->escapeHtml($user->getName()) ?></div>
+                        <div class="user-table-body-cell"><?= $block->escapeHtml($user->getSurname()) ?></div>
+                        <div class="user-table-body-cell"><?= $block->escapeHtml($user->getBirthDate()) ?></div>
                         <div class="user-table-body-cell"><?= $block->escapeHtml($block->getWeatherTypeNameByID($user->getWeatherType())) ?></div>
                     </div>
                 <?php endforeach; ?>

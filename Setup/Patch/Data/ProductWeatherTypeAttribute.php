@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace AdeoWeb\WeatherApplication\Setup\Patch\Data;
 
 use AdeoWeb\WeatherApplication\Model\Attribute\Source\WeatherTypeAttribute;
+use Magento\Eav\Model\Entity\Attribute\Backend\ArrayBackend;
 use Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface;
 use Magento\Eav\Setup\EavSetupFactory;
-use Magento\Eav\Setup\EavSetup;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
 use Magento\Framework\Setup\Patch\PatchRevertableInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
@@ -16,7 +16,7 @@ use Magento\Catalog\Model\Product;
 class ProductWeatherTypeAttribute implements DataPatchInterface, PatchRevertableInterface
 {
     private const ATTRIBUTE_WEATHERTYPE = 'product_weathertype';
-    private const PARAM_SETUP = 'setup';
+    private const PARAM_SETUP           = 'setup';
 
     /**
      * @var ModuleDataSetupInterface
@@ -42,7 +42,6 @@ class ProductWeatherTypeAttribute implements DataPatchInterface, PatchRevertable
     public function apply()
     {
         $this->moduleDataSetup->getConnection()->startSetup();
-        /** @var EavSetup $eavSetup */
         $eavSetup = $this->eavSetupFactory->create([self::PARAM_SETUP => $this->moduleDataSetup]);
 
         $eavSetup->addAttribute(Product::ENTITY, self::ATTRIBUTE_WEATHERTYPE, [
@@ -52,7 +51,7 @@ class ProductWeatherTypeAttribute implements DataPatchInterface, PatchRevertable
             'source' => WeatherTypeAttribute::class,
             'frontend' => '',
             'required' => false,
-            'backend' => 'Magento\Eav\Model\Entity\Attribute\Backend\ArrayBackend',
+            'backend' => ArrayBackend::class,
             'sort_order' => '30',
             'global' => ScopedAttributeInterface::SCOPE_GLOBAL,
             'default' => null,
@@ -93,7 +92,6 @@ class ProductWeatherTypeAttribute implements DataPatchInterface, PatchRevertable
     public function revert()
     {
         $this->moduleDataSetup->getConnection()->startSetup();
-        /** @var EavSetup $eavSetup */
         $eavSetup = $this->eavSetupFactory->create([self::PARAM_SETUP => $this->moduleDataSetup]);
         $eavSetup->removeAttribute(Product::ENTITY, self::ATTRIBUTE_WEATHERTYPE);
         $this->moduleDataSetup->getConnection()->endSetup();

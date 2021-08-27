@@ -26,12 +26,12 @@ class WeatherType extends AbstractModel implements WeatherTypeInterface
 
     public function getCreationTime()
     {
-        return $this->getData(self::CREATION_TIME);
+        return $this->getData(self::CREATED_AT);
     }
 
     public function getUpdateTime()
     {
-        return $this->getData(self::UPDATE_TIME);
+        return $this->getData(self::UPDATED_AT);
     }
 
     /**
@@ -50,11 +50,11 @@ class WeatherType extends AbstractModel implements WeatherTypeInterface
 
     public function setCreationTime(string $creationTime)
     {
-        return $this->setData(self::CREATION_TIME, $creationTime);
+        return $this->setData(self::CREATED_AT, $creationTime);
     }
 
     public function setUpdateTime(string $updateTime)
     {
-        return $this->setData(self::UPDATE_TIME, $updateTime);
+        return $this->setData(self::UPDATED_AT, $updateTime);
     }
 }
